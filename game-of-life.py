@@ -1,7 +1,5 @@
 from sys import argv
-import urwid
-
-import os
+from src import window
 
 
 def main():
@@ -14,7 +12,7 @@ def main():
         print("File not found or path is incorrect")
         return
     array = build_array(file)
-    print(array)
+    window.Window(array)
 
 
 def build_array(file):
