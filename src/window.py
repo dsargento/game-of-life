@@ -32,7 +32,8 @@ class Window:
 
         # Start colors in curses
         curses.start_color()
-        curses.init_pair(1, curses.COLOR_CYAN, curses.COLOR_BLACK)
+        curses.use_default_colors()
+        curses.init_pair(1, curses.COLOR_GREEN, -1)
         curses.init_pair(2, curses.COLOR_RED, curses.COLOR_BLACK)
         curses.init_pair(3, curses.COLOR_BLACK, curses.COLOR_WHITE)
 
@@ -40,15 +41,6 @@ class Window:
         while k != ord('q'):
             # Initialization
             height, width = stdscr.getmaxyx()
-
-            if k == curses.KEY_DOWN:
-                cursor_y = cursor_y + 1
-            elif k == curses.KEY_UP:
-                cursor_y = cursor_y - 1
-            elif k == curses.KEY_RIGHT:
-                cursor_x = cursor_x + 1
-            elif k == curses.KEY_LEFT:
-                cursor_x = cursor_x - 1
 
             cursor_x = max(0, cursor_x)
             cursor_x = min(width - 1, cursor_x)
@@ -75,7 +67,6 @@ class Window:
             stdscr.attron(curses.color_pair(2))
             stdscr.attron(curses.A_BOLD)
 
-            # Rendering title
 
             # Turning off attributes for title
             stdscr.attroff(curses.color_pair(2))
@@ -92,6 +83,8 @@ class Window:
 
     @staticmethod
     def update_array(stdscr, self):
+
         while self.thread_list[0].is_alive():
-            stdscr.addstr(1, 2, "coucou", curses.color_pair(1))
+            for index, val in enumerate(self.cell_array):
+                stdscr.addstr(index+1, 0, val, curses.color_pair(1))
             time.sleep(0.05)
